@@ -10,7 +10,7 @@
 get_prevalence_weights <- function(dataframe, cols){
 
   # Check that all are binary.
-  vals <- lapply(final_df[,tt], function(x) unique(x))
+  vals <- lapply(final_df[,cols], function(x) unique(x))
 
   if(!all(unlist(vals) %in% c(0,1)))stop('All selected columns should only have values 0 or 1')
 

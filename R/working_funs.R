@@ -54,33 +54,102 @@ core_hamming <- function(data_frame, col_names_diags){
   return(as.dist(output))
 }
 
-#depreciate
-#core_hamming <- function(data_frame, col_names_diags){
-#  # takes a df and the column names of diagnoses, creates a distance matrix based on hamming distance
-#  if(sum(!(col_names_diags %in% names(data_frame))) >0){stop('column names not in dataframe names')}
-#  pasted <- apply(data_frame[,col_names_diags],1, paste, collapse='')
-#  unique_patterns <- unique(pasted)
-#  split_pattern <- strsplit(unique_patterns,'')
-#  split_pattern_number <- lapply(split_pattern, as.numeric)
-#  out_mat <- matrix(unlist(splitted_patterns_number), ncol=length(col_names_diags), byrow=T)
-#  output <- hamming(out_mat)
-#  return(as.dist(output))
-#}
+# #depreciate
+# #core_hamming <- function(data_frame, col_names_diags){
+# #  # takes a df and the column names of diagnoses, creates a distance matrix based on hamming distance
+# #  if(sum(!(col_names_diags %in% names(data_frame))) >0){stop('column names not in dataframe names')}
+# #  pasted <- apply(data_frame[,col_names_diags],1, paste, collapse='')
+# #  unique_patterns <- unique(pasted)
+# #  split_pattern <- strsplit(unique_patterns,'')
+# #  split_pattern_number <- lapply(split_pattern, as.numeric)
+# #  out_mat <- matrix(unlist(splitted_patterns_number), ncol=length(col_names_diags), byrow=T)
+# #  output <- hamming(out_mat)
+# #  return(as.dist(output))
+# #}
+#
+# hamming_from_pasted_binarystring <- function(pasted_diags){
+#   # takes a df and the column names of diagnoses, creates a distance matrix based on hamming distance
+#   unique_patterns <- unique(pasted_diags)
+#   split_pattern <- strsplit(unique_patterns,'')
+#   split_pattern_number <- lapply(split_pattern, as.numeric)
+#   out_mat <- matrix(unlist(splitted_patterns_number), ncol=nchar(unique_patterns[1]), byrow=T)
+#   output <- hamming(out_mat)
+#   return(as.dist(output))
+# }
+#
+# # note you can express binary strings as numbers e.g. base::strtoi('01010', base=2) ## this may be convenient. #
+#
+# aa <- apply_weights(test_matrix, c(0.25, 0.4, 0.3, 0.1))
+# weights <- c(0.25, 0.4, 0.3, 0.1)
+#
+#
+# # take a matrix, each row is a 'patient pattern' e.g. aa
+#
+# # compare row 1:row2; if items match, then --> 0, then sum all
+# aa[1,] != aa[3,]
+# vv <- aa[1,] != aa[3,]
+# sum(aa[c(1,3), vv])
+#
+# transposed <- t(aa)
+# weights
+# # sum up each row where the element is not present
+# tester <- lapply(weights, function(x) transposed * (transposed != x))
+#
+# # weight based is not a good solution
+#
+# w <- weights[1]
+# vv <- transposed != w
+# colSums(transposed*vv)
+#
+# testering <- apply(transposed, 2, function(x){
+#   x = transposed[,3]
+#   vv <- x != transposed
+#   colSums(transposed*vv)
+# })
+#
+# # because this results in some columns not comparing vs. self, do some magic to get into a matrix:
+# # first extract columnwise
+# by_column_extract <- c(testering)
+# # now extract rowwise
+# by_row_extract <- c(c(t(testering)))
+# # identify maximal element by column/row
+# for_fill <- pmax(by_column_extract, by_row_extract)
+# # find those where minimal value != 0, these need to be added together
+# to_add <- which(pmin(by_column_extract, by_row_extract) != 0)
+# # fill in and addition from column and row
+# for_fill[to_add] <- by_column_extract[to_add] + by_row_extract[to_add]
+# # now format back into matrix.
+# mat <- matrix(for_fill, nrow=5, ncol=5)
 
-hamming_from_pasted_binarystring <- function(pasted_diags){
-  # takes a df and the column names of diagnoses, creates a distance matrix based on hamming distance
-  unique_patterns <- unique(pasted_diags)
-  split_pattern <- strsplit(unique_patterns,'')
-  split_pattern_number <- lapply(split_pattern, as.numeric)
-  out_mat <- matrix(unlist(splitted_patterns_number), ncol=nchar(unique_patterns[1]), byrow=T)
-  output <- hamming(out_mat)
-  return(as.dist(output))
-}
+# need to compare each row to
 
-# note you can express binary strings as numbers e.g. base::strtoi('01010', base=2) ## this may be convenient. #
-
-
-# adjusted hamming
-adjusted_hamming <- function(x){
-
-}
+# adjusted_hamming <- function(x, weights){
+#   master_locale <- unique.matrix(x, MARGIN = 1) # by row
+#
+#   # apply weights
+#   weighted_locale <- apply_weights(master_locale, weights)
+#
+#   # transpose data because all columnwise functions:
+#   transposed <- t(weighted_locale)
+#
+#   testering <- apply(transposed, 2, function(x){
+#     vv <- x != transposed
+#     colSums(transposed*vv)
+#   })
+#
+#   # because this results in some columns not comparing vs. self, do some magic to get into a matrix:
+#   # we need to add all elements together, should result in a n*n dataframe with between pattern similarity
+#   # diag should == 0
+# #   return(testering + t(testering))
+# # }
+#
+# new_test_matrix <- matrix(c(0,1,1,1,
+#                             0,0,0,0,
+#                             1,1,0,0,
+#                             1,0,0,0,
+#                             0,1,1,1,
+#                             0,1,0,1), nrow=6, byrow=T)
+#
+# weights <- c(0.8, 0.5, 0.6, 0.3)
+#
+#

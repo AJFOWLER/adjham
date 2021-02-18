@@ -5,7 +5,7 @@
 #' @return
 #' @example
 
-apply_weight <- function(combos, weights){
+apply_weights <- function(combos, weights){
   # replace positions by weights where appropriate
   return(combos*weights[col(combos)])
 }
