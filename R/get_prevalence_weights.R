@@ -17,14 +17,15 @@ get_prevalence_weights <- function(dataframe, cols){
   # Calculate the prevalence for each diagnostic column
   pr <- colSums(dataframe[,cols])/nrow(dataframe)
 
-  # Determine inverse prevalence
-  inv_pr <- 1-unname(pr)
+  # Determine inverse prevalence; this doesn't work very well
+  inv_pr <- 1-pr # how about standard score : sqrt(((pr-mean(pr))/sd(pr))^2), or coefficient of variation: pr * (mean(pr)/sd(pr))
 
   # Generating a weighting on the basis of the overall prevalence of each disease in the cohort
-  inv_pr_wt <- inv_pr * sum(pr)/length(pr)
+  # this needs a little work
+  inv_pr_wt <- inv_pr[] # one option is this which is min/max rescaling
 
   # Determine the inv_prevalence floored as 0.5
-  floored_pr <- abs(0.5 - inv_pr)+0.5
+  floored_pr <- sqrt(((pr-mean(pr))/sd(pr))^2) #abs(0.5 - pr)+0.5 #standard score
 
   # Return list of weighted prevalence options
   return(list(inv_pr = inv_pr, inv_pr_wt = inv_pr_wt, floored_pr = floored_pr, prevalence = pr))
