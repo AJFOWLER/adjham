@@ -10,16 +10,18 @@
 #' hamming(test_matrix)
 
 adjusted_hamming <- function(x){
-  # transpose data because all columnwise functions:
+  if(!any(class(x) %in% c('matrix', 'data.frame'))){stop('Data should be a matrix or data.frame coercible to a matrix')}
+
+  # transpose data so we can do columnwise functions:
   transposed <- t(x)
 
   testering <- apply(transposed, 2, function(col_){
+    # remove matching columns (columns == rows == diseases, do this for all)
     vv <- col_ != transposed
+    # sum up the columns
     colSums(transposed*vv)
   })
-
-  # because this results in some columns not comparing vs. self, do some magic to get into a matrix:
-  # we need to add all elements together, should result in a n*n dataframe with between pattern similarity
+  # we need to add all elements together, should result in a n*n matrix with between pattern similarity
   # diag should == 0
   return(testering + t(testering))
 }
