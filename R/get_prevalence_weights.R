@@ -3,6 +3,7 @@
 #' @param dataframe Dataframe containing diagnostic data
 #' @param cols Names or integer of column positions with relevant diagnosis
 #' @return
+#' @importFrom stats sd
 #' @references
 #' @example
 

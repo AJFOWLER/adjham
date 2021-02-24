@@ -6,7 +6,8 @@
 #' @return
 #' @references
 #' @example
-#'
+#' @export
+
 hamming_prepared <- function(dataframe, cols, weighting = NULL){
   prevalence <- get_prevalence_weights(dataframe, cols)
   # select only unique columns
@@ -20,7 +21,7 @@ hamming_prepared <- function(dataframe, cols, weighting = NULL){
   }
   else
   {
-    data_ready <- apply_weight(minimise, prevalence[[weighting]])
+    data_ready <- apply_weights(minimise, prevalence[[weighting]])
   }
   return(list(data = data.matrix(data_ready), key = apply(minimise, 1, paste, collapse='')))
 }

@@ -18,7 +18,7 @@ weights_simple <- rep(2,4)
 weights_little <- c(0.01, 0.05, 0.03, 0.02)
 
 test_that("Application of weights results in matching shape", {
-  expect_equal(!apply_weight(t_dat, weights_simple), !t_dat)
+  expect_equal(!apply_weights(t_dat, weights_simple), !t_dat)
 })
 
 expected_simple <- structure(c(0, 0, 2, 2, 0, 2, 0, 2, 0, 2, 0, 0, 2, 0, 0, 2, 0,
@@ -28,6 +28,6 @@ expected_little <- structure(c(0, 0, 0.01, 0.01, 0, 0.05, 0, 0.05, 0, 0.05, 0, 0
             0.03, 0, 0, 0.02, 0, 0, 0, 0.02), .Dim = 5:4)
 
 test_that("Weighting is accurate", {
-  expect_equal(apply_weight(t_dat, weights_simple), expected_simple)
-  expect_equal(apply_weight(t_dat, weights_little), expected_little)
+  expect_equal(apply_weights(t_dat, weights_simple), expected_simple)
+  expect_equal(apply_weights(t_dat, weights_little), expected_little)
 })
