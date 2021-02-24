@@ -2,12 +2,13 @@
 #' @description Fast calculation of Hamming distance when applied to a matrix.
 #' @param x A binary matrix.
 #' @return A matrix of distances between each row of original matrix.
-#' @references This fast Hamming distance version was taken from : https://johanndejong.wordpress.com/2015/09/23/fast-hamming-distance-in-r/
-#' @example
+#' @references This fast Hamming distance version is based on: \url{https://johanndejong.wordpress.com/2015/09/23/fast-hamming-distance-in-r/}.
+#' @examples
 #' test_matrix <- matrix(c(0,1,1,
 #'                       1,0,0,
-#'                      0,1,1), ncol = 3, byrow = T)
-#' hamming(test_matrix)
+#'                      0,1,1), ncol = 3, byrow = TRUE)
+#' adjusted_hamming(test_matrix)
+#' @export
 
 adjusted_hamming <- function(x){
   if(!any(class(x) %in% c('matrix', 'data.frame'))){stop('Data should be a matrix or data.frame coercible to a matrix')}

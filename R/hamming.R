@@ -3,11 +3,12 @@
 #' @param x A binary matrix.
 #' @return A matrix of distances between each row of original matrix.
 #' @references This fast Hamming distance version was taken from : https://johanndejong.wordpress.com/2015/09/23/fast-hamming-distance-in-r/
-#' @example
+#' @examples
 #' test_matrix <- matrix(c(0,1,1,
 #'                       1,0,0,
-#'                      0,1,1), ncol = 3, byrow = T)
+#'                      0,1,1), ncol = 3, byrow = TRUE)
 #' hamming(test_matrix)
+#' @export
 
 hamming <- function(x) {
   # determine the dot product of binary vectors to count similar/different
