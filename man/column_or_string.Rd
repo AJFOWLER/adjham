@@ -7,5 +7,5 @@
 column_or_string()
 }
 \description{
-
+This function will detemrine columns or pasted string; not necessary currently
 }
